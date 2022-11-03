@@ -3,16 +3,14 @@ package view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class NeuesKontoView extends JFrame {
     private JRadioButton radioGiro, radioSpar, radioFest;
-
-
-    private JTextField kontoinhaber, kreditlimit, zinssatz, laufzeit;
-    private JButton hauptmenü, anlegen;
-
-
+    private JTextField kontoinhaberTextfield, kreditlimitTextfield, zinssatzTextfield, laufzeitTextfield;
+    private JButton anlegenButton;
+    private JPanel kreditlimitPanel, zinssatzPanel, laufzeitPanel;
 
     public NeuesKontoView() {
         // setSize() könnte abstrahiert werden => DRY
@@ -22,6 +20,7 @@ public class NeuesKontoView extends JFrame {
         addComponents();
         pack();
         setVisible(true);
+        switchKonto('G');
     }
 
     public void addComponents() {
@@ -36,11 +35,13 @@ public class NeuesKontoView extends JFrame {
 
     private void addButtons(JPanel bottomPanel) {
         bottomPanel.setBorder( new EmptyBorder(5,5,5,5) );
-        hauptmenü = new JButton("Hauptmenü");
-        anlegen = new JButton("Anlegen");
-        bottomPanel.add(hauptmenü);
-        bottomPanel.add(anlegen);
+        JButton abbrechenButton = new JButton("Abbrechen");
+        anlegenButton = new JButton("Anlegen");
+        bottomPanel.add(abbrechenButton);
+        bottomPanel.add(anlegenButton);
+        abbrechenButton.addActionListener( e -> dispose() );
     }
+
     private void addCenterComponents(JPanel centerPanel) {
         centerPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -48,67 +49,112 @@ public class NeuesKontoView extends JFrame {
         radioGiro = new JRadioButton("Girokonto");
         radioSpar = new JRadioButton("Sparkonto");
         radioFest = new JRadioButton("Festzinskonto");
-        radioGiro.setSelected(true);
         ButtonGroup bg = new ButtonGroup();
         bg.add(radioGiro);
         bg.add(radioSpar);
         bg.add(radioFest);
-
-
-
         centerLeft.add(radioGiro);
         centerLeft.add(radioSpar);
         centerLeft.add(radioFest);
+        radioGiro.addActionListener( this::switchKontoListener );
+        radioSpar.addActionListener( this::switchKontoListener );
+        radioFest.addActionListener( this::switchKontoListener );
 
-        JPanel centerRight = new JPanel( new GridLayout(4,2));
-        kontoinhaber = new JTextField("Max Mustermann");
-        kreditlimit = new JTextField();
-        zinssatz = new JTextField();
-        laufzeit = new JTextField();
+        JPanel centerRight = new JPanel( new GridLayout(4,1) );
+        kontoinhaberTextfield = new JTextField("Max Mustermann");
+        kreditlimitTextfield = new JTextField();
+        zinssatzTextfield = new JTextField();
+        laufzeitTextfield = new JTextField();
 
-        centerRight.add( new JLabel("Kontoinhaber") );
-        centerRight.add(kontoinhaber);
-        centerRight.add( new JLabel("Kreditlimit"));
-        centerRight.add(kreditlimit);
-        centerRight.add( new JLabel("Zinssatz") );
-        centerRight.add(zinssatz);
-        centerRight.add( new JLabel("Laufzeit"));
-        centerRight.add(laufzeit);
+        JPanel kontoinhaberPanel = new JPanel( new GridLayout(1,2) );
+        kreditlimitPanel = new JPanel( new GridLayout(1,2) );
+        zinssatzPanel = new JPanel( new GridLayout(1,2) );
+        laufzeitPanel = new JPanel( new GridLayout(1,2) );
 
+        kontoinhaberPanel.add( new JLabel("Kontoinhaber") );
+        kontoinhaberPanel.add(kontoinhaberTextfield);
+        kreditlimitPanel.add( new JLabel("Kreditlimit") );
+        kreditlimitPanel.add(kreditlimitTextfield);
+        zinssatzPanel.add( new JLabel("Zinssatz") );
+        zinssatzPanel.add(zinssatzTextfield);
+        laufzeitPanel.add( new JLabel("Laufzeit"));
+        laufzeitPanel.add(laufzeitTextfield);
+
+        centerRight.add( kontoinhaberPanel );
+        centerRight.add( kreditlimitPanel );
+        centerRight.add( zinssatzPanel );
+        centerRight.add( laufzeitPanel );
 
         centerPanel.add(centerLeft);
         centerPanel.add(centerRight);
     }
 
-    public void setHauptmenüListener(ActionListener listener){
-        hauptmenü.addActionListener(listener);
-    }
-    public void setAnlegen(ActionListener listener){
-        anlegen.addActionListener(listener);
-    }
-    public int getKonto(){
-        if(radioGiro.isSelected()) return 1;
-        else if(radioSpar.isSelected()) return 2;
-        else return 3;
+    public void setAnlegenButton(ActionListener listener){
+        anlegenButton.addActionListener(listener);
     }
 
-    public JTextField getKontoinhaber() {
-        return kontoinhaber;
+    private void switchKontoListener(ActionEvent actionEvent) {
+        switchKonto( getKonto() );
     }
 
-    public JTextField getKreditlimit() {
+    private void switchKonto(char kontotyp) {
+        // erstmal alle Elemente ausblenden
+        kreditlimitPanel.setVisible(false);
+        zinssatzPanel.setVisible(false);
+        laufzeitPanel.setVisible(false);
+
+        switch (kontotyp) {
+            case 'G' -> {
+                radioGiro.setSelected(true);
+                kreditlimitPanel.setVisible(true);
+            }
+            case 'S' -> {
+                radioSpar.setSelected(true);
+                zinssatzPanel.setVisible(true);
+            }
+            case 'F' -> {
+                radioFest.setSelected(true);
+                zinssatzPanel.setVisible(true);
+                laufzeitPanel.setVisible(true);
+            }
+        }
+    }
+
+    public char getKonto() {
+        if(radioGiro.isSelected()) return 'G';
+        else if(radioSpar.isSelected()) return 'S';
+        else return 'F';
+    }
+
+    public String getKontoinhaber() {
+        return kontoinhaberTextfield.getText();
+    }
+
+    // im ersten Ansatz erhalten wir den double hierüber
+    public double getKreditlimit() {
+        String textValue = kreditlimitTextfield.getText();
+        double kreditlimit = 0.0;
+        kreditlimit = Double.parseDouble(textValue);
         return kreditlimit;
     }
 
-    public JTextField getZinssatz() {
+    public double getZinssatz() {
+        String textValue = zinssatzTextfield.getText();
+        double zinssatz = 0.0;
+        zinssatz = Double.parseDouble(textValue);
         return zinssatz;
     }
 
-    public JTextField getLaufzeit() {
+    // Getter für Laufzeit
+    public int getLaufzeit() {
+        String textValue = zinssatzTextfield.getText();
+        int laufzeit = 0;
+        laufzeit = Integer.parseInt(textValue);
         return laufzeit;
     }
 
     public static void main(String[] args) {
+        // Zum Testen des Mockups.
         new NeuesKontoView();
     }
 }
