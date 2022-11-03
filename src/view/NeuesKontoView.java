@@ -101,6 +101,7 @@ public class NeuesKontoView extends JFrame {
         return zinssatz;
     }
 
+    // Getter für Laufzeit
     public JTextField getLaufzeit() {
         return laufzeit;
     }
