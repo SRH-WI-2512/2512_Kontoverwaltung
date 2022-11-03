@@ -109,6 +109,7 @@ public class NeuesKontoView extends JFrame {
     }
 
     public static void main(String[] args) {
+        // Zum Testen des Mockups.
         new NeuesKontoView();
     }
 }
