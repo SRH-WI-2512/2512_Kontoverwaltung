@@ -7,12 +7,8 @@ import java.awt.event.ActionListener;
 
 public class NeuesKontoView extends JFrame {
     private JRadioButton radioGiro, radioSpar, radioFest;
-
-
     private JTextField kontoinhaber, kreditlimit, zinssatz, laufzeit;
     private JButton hauptmenü, anlegen;
-
-
 
     public NeuesKontoView() {
         // setSize() könnte abstrahiert werden => DRY
@@ -41,6 +37,7 @@ public class NeuesKontoView extends JFrame {
         bottomPanel.add(hauptmenü);
         bottomPanel.add(anlegen);
     }
+
     private void addCenterComponents(JPanel centerPanel) {
         centerPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -53,8 +50,6 @@ public class NeuesKontoView extends JFrame {
         bg.add(radioGiro);
         bg.add(radioSpar);
         bg.add(radioFest);
-
-
 
         centerLeft.add(radioGiro);
         centerLeft.add(radioSpar);
@@ -83,9 +78,11 @@ public class NeuesKontoView extends JFrame {
     public void setHauptmenüListener(ActionListener listener){
         hauptmenü.addActionListener(listener);
     }
+
     public void setAnlegen(ActionListener listener){
         anlegen.addActionListener(listener);
     }
+
     public int getKonto(){
         if(radioGiro.isSelected()) return 1;
         else if(radioSpar.isSelected()) return 2;
