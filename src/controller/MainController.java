@@ -2,6 +2,7 @@ package controller;
 
 import dao.KontoDAO;
 import dao.TempDAO;
+import model.Konto;
 import view.MainView;
 import view.NeuesKontoView;
 
@@ -19,7 +20,15 @@ public class MainController {
         this.kontoDB = kontoDB;
 
         mainView.setNeuesKontoButtonListener( this::performNeuesKonto );
+        mainView.setKontoAnzeigenButtonListener( this::performKontoAnzeigen );
 
+    }
+
+    private void performKontoAnzeigen(ActionEvent actionEvent) {
+        int kontonummer = mainView.getKontonummer();
+        Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
+        mainView.setKontoinhaber( konto.getInhaber() );
+        mainView.setKontostand( konto.getKontostand() );
     }
 
     private void performNeuesKonto(ActionEvent actionEvent) {

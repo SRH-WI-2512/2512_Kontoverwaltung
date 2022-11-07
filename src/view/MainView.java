@@ -10,6 +10,10 @@ public class MainView extends JFrame {
     private JButton neuesKontoButton;
     private JButton alleKontenAnzeigenButton;
     private JButton billanzButton;
+    private JButton kontoAnzeigenButton;
+    private JTextField kontonummerTextfield;
+    private JTextField kontoinhaberTextfield;
+    private JTextField kontostandTextfield;
 
     public MainView() {
         setSize(600, 400);
@@ -44,16 +48,21 @@ public class MainView extends JFrame {
     private void addCenterComponents(JPanel centerPanel) {
         centerPanel.setBorder( new EmptyBorder(5,5,5,5) );
 
-        centerPanel.add( new JLabel("Kontonummer") );
-        centerPanel.add( new JTextField() );
-        centerPanel.add( new JButton("Konto anzeigen") );
+        kontoAnzeigenButton = new JButton("Konto anzeigen");
+        kontonummerTextfield = new JTextField();
 
+        centerPanel.add( new JLabel("Kontonummer") );
+        centerPanel.add( kontonummerTextfield );
+        centerPanel.add( kontoAnzeigenButton );
+
+        kontoinhaberTextfield = new JTextField();
         centerPanel.add( new JLabel("Kontoinhaber") );
-        centerPanel.add( new JTextField() );
+        centerPanel.add( kontoinhaberTextfield );
         centerPanel.add( new JButton("Zinsen zuschlagen") );
 
+        kontostandTextfield = new JTextField();
         centerPanel.add( new JLabel("Kontostand") );
-        centerPanel.add( new JTextField() );
+        centerPanel.add( kontostandTextfield );
         centerPanel.add( new JButton("Konto löschen") );
 
         centerPanel.add( new JLabel("Betrag") );
@@ -68,6 +77,23 @@ public class MainView extends JFrame {
 
     public void setNeuesKontoButtonListener(ActionListener listener) {
         neuesKontoButton.addActionListener(listener);
+    }
+
+    public void setKontoAnzeigenButtonListener(ActionListener listener) {
+        kontoAnzeigenButton.addActionListener(listener);
+    }
+
+    public int getKontonummer() {
+        int kontonummer = Integer.parseInt( kontonummerTextfield.getText() );
+        return kontonummer;
+    }
+
+    public void setKontoinhaber(String inhaber) {
+        kontoinhaberTextfield.setText(inhaber);
+    }
+
+    public void setKontostand(double kontostand) {
+        kontostandTextfield.setText( Double.toString(kontostand) );
     }
 
     // Mockup starten
