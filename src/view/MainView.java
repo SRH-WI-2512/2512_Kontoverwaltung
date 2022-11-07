@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MainView extends JFrame {
 
@@ -63,6 +64,10 @@ public class MainView extends JFrame {
         manipulationsPanel.add( new JButton("Einzahlen") );
         manipulationsPanel.add( new JButton("Abheben") );
         centerPanel.add( manipulationsPanel );
+    }
+
+    public void setNeuesKontoButtonListener(ActionListener listener) {
+        neuesKontoButton.addActionListener(listener);
     }
 
     // Mockup starten
