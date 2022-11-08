@@ -25,10 +25,17 @@ public class MainController {
     }
 
     private void performKontoAnzeigen(ActionEvent actionEvent) {
-        int kontonummer = mainView.getKontonummer();
-        Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
-        mainView.setKontoinhaber( konto.getInhaber() );
-        mainView.setKontostand( konto.getKontostand() );
+        try {
+            int kontonummer = mainView.getKontonummer();
+            Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
+            mainView.setKontoinhaber( konto.getInhaber() );
+            mainView.setKontostand( konto.getKontostand() );
+        }
+        catch (Exception e){
+            mainView.setKontoinhaber("Konto nicht vorhanden!");
+            mainView.setKontostand(0.0);
+        }
+
     }
 
     private void performNeuesKonto(ActionEvent actionEvent) {
