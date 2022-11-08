@@ -134,14 +134,24 @@ public class NeuesKontoView extends JFrame {
     public double getKreditlimit() {
         String textValue = kreditlimitTextfield.getText();
         double kreditlimit = 0.0;
-        kreditlimit = Double.parseDouble(textValue);
+        try {
+            kreditlimit = Double.parseDouble(textValue);
+        }
+        catch (NumberFormatException e) {
+            System.err.println("Kreditlimit im falschen Format!");
+        }
         return kreditlimit;
     }
 
     public double getZinssatz() {
         String textValue = zinssatzTextfield.getText();
         double zinssatz = 0.0;
-        zinssatz = Double.parseDouble(textValue);
+        try {
+            zinssatz = Double.parseDouble(textValue);
+        }
+        catch (NumberFormatException e) {
+            System.err.println("Zinssatz im falschen Format!");
+        }
         return zinssatz;
     }
 
@@ -149,7 +159,12 @@ public class NeuesKontoView extends JFrame {
     public int getLaufzeit() {
         String textValue = zinssatzTextfield.getText();
         int laufzeit = 0;
-        laufzeit = Integer.parseInt(textValue);
+        try {
+            laufzeit = Integer.parseInt(textValue);
+        }
+        catch (NumberFormatException e) {
+            System.err.println("Laufzeit im falschen Format!");
+        }
         return laufzeit;
     }
 
