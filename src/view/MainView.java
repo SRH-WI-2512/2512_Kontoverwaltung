@@ -84,7 +84,13 @@ public class MainView extends JFrame {
     }
 
     public int getKontonummer() {
-        int kontonummer = Integer.parseInt( kontonummerTextfield.getText() );
+        int kontonummer = 0;
+        try {
+            kontonummer = Integer.parseInt(kontonummerTextfield.getText());
+        }
+        catch (NumberFormatException e) {
+            System.err.println("Kontonummer im falschen Format!");
+        }
         return kontonummer;
     }
 
@@ -96,8 +102,16 @@ public class MainView extends JFrame {
         kontostandTextfield.setText( Double.toString(kontostand) );
     }
 
+    public void clearKontostand() {
+        kontostandTextfield.setText("");
+    }
+
     // Mockup starten
     public static void main(String[] args) {
         new MainView();
+    }
+
+    public void zeigeFehlermeldung(String message) {
+        JOptionPane.showMessageDialog(this, message, "Fehler", JOptionPane.ERROR_MESSAGE);
     }
 }
