@@ -8,6 +8,7 @@ import view.NeuesKontoView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
@@ -21,11 +22,22 @@ public class MainController {
 
         mainView.setNeuesKontoButtonListener( this::performNeuesKonto );
         mainView.setKontoAnzeigenButtonListener( this::performKontoAnzeigen );
+        mainView.setEinzahlenButtonListener( this::performEinzahlen );
+    }
 
+    private void performEinzahlen(ActionEvent actionEvent) {
+        int kontonummer = mainView.getKontonummer();
+        Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
+        if (konto != null) {
+            konto.einzahlen( mainView.getBetrag() );
+            kontoDB.updateKonto( kontonummer, konto );
+        }
+        else mainView.zeigeFehlermeldung("Konto nicht gefunden");
     }
 
     private void performKontoAnzeigen(ActionEvent actionEvent) {
         int kontonummer = mainView.getKontonummer();
+
         Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
         if (konto == null) {
             mainView.setKontoinhaber("");

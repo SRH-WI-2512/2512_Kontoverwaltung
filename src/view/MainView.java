@@ -14,6 +14,9 @@ public class MainView extends JFrame {
     private JTextField kontonummerTextfield;
     private JTextField kontoinhaberTextfield;
     private JTextField kontostandTextfield;
+    private JButton einzahlenButton;
+    private JButton abhebenButton;
+    private JTextField betragTextfield;
 
     public MainView() {
         setSize(600, 400);
@@ -65,13 +68,16 @@ public class MainView extends JFrame {
         centerPanel.add( kontostandTextfield );
         centerPanel.add( new JButton("Konto löschen") );
 
+        betragTextfield = new JTextField();
         centerPanel.add( new JLabel("Betrag") );
-        centerPanel.add( new JTextField() );
+        centerPanel.add( betragTextfield );
 
         // Extra Panel für zwei Buttons
+        einzahlenButton = new JButton("Einzahlen");
+        abhebenButton = new JButton("Abheben");
         JPanel manipulationsPanel = new JPanel(new FlowLayout());
-        manipulationsPanel.add( new JButton("Einzahlen") );
-        manipulationsPanel.add( new JButton("Abheben") );
+        manipulationsPanel.add( einzahlenButton );
+        manipulationsPanel.add( abhebenButton );
         centerPanel.add( manipulationsPanel );
     }
 
@@ -81,6 +87,14 @@ public class MainView extends JFrame {
 
     public void setKontoAnzeigenButtonListener(ActionListener listener) {
         kontoAnzeigenButton.addActionListener(listener);
+    }
+
+    public void setEinzahlenButtonListener(ActionListener listener) {
+        einzahlenButton.addActionListener(listener);
+    }
+
+    public void setAbhebenButtonListener(ActionListener listener) {
+        abhebenButton.addActionListener(listener);
     }
 
     public int getKontonummer() {
@@ -104,6 +118,22 @@ public class MainView extends JFrame {
 
     public void clearKontostand() {
         kontostandTextfield.setText("");
+    }
+
+    public void setBetrag(double betrag) {
+        betragTextfield.setText( Double.toString(betrag) );
+    }
+
+    public double getBetrag() {
+        String textValue = betragTextfield.getText();
+        double betrag = 0.0;
+        try {
+            betrag = Double.parseDouble(textValue);
+        }
+        catch (NumberFormatException e) {
+            System.err.println("Betrag im falschen Format!");
+        }
+        return betrag;
     }
 
     // Mockup starten
