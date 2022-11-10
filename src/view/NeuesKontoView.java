@@ -89,7 +89,7 @@ public class NeuesKontoView extends JFrame {
         centerPanel.add(centerRight);
     }
 
-    public void setAnlegenButton(ActionListener listener){
+    public void setAnlegenButtonListener(ActionListener listener){
         anlegenButton.addActionListener(listener);
     }
 

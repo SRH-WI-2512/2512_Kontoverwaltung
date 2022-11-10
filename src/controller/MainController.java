@@ -2,19 +2,22 @@ package controller;
 
 import dao.KontoDAO;
 import dao.TempDAO;
+import model.Festzinskonto;
+import model.Giro;
 import model.Konto;
+import model.Sparkonto;
 import view.MainView;
 import view.NeuesKontoView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public class MainController {
     private MainView mainView;
     private KontoDAO kontoDB;
+    private NeuesKontoView neuesKontoView;
 
     public MainController(MainView mainView, KontoDAO kontoDB) {
         this.mainView = mainView;
@@ -51,9 +54,10 @@ public class MainController {
     }
 
     private void performNeuesKonto(ActionEvent actionEvent) {
-        NeuesKontoView neuesKontoView = new NeuesKontoView();
+        neuesKontoView = new NeuesKontoView();
         mainView.setEnabled(false);
 
+        neuesKontoView.setAnlegenButtonListener(this::performKontoAnlegen);
         neuesKontoView.addWindowListener(new WindowListener() {
             @Override
             public void windowOpened(WindowEvent e) {}
@@ -79,6 +83,30 @@ public class MainController {
             @Override
             public void windowDeactivated(WindowEvent e) {}
         });
+    }
+
+    private void performKontoAnlegen(ActionEvent actionEvent) {
+        //System.out.println("Neues Konto");
+        Konto k = null;
+        int kontonummer = kontoDB.letzteAktuelleKontonummer() + 1;
+        String name = neuesKontoView.getKontoinhaber();
+        double limit = neuesKontoView.getKreditlimit();
+        double zinssatz = neuesKontoView.getZinssatz();
+        int laufzeit = neuesKontoView.getLaufzeit();
+
+        switch (neuesKontoView.getKonto()){
+            case 'G': k = new Giro(kontonummer, 0.0, name, limit);
+            break;
+            case 'S': k = new Sparkonto(kontonummer, 0.0, name, zinssatz);
+            break;
+            case 'F': k = new Festzinskonto(kontonummer, 0.0, name, zinssatz, laufzeit);
+            break;
+        }
+        if (k != null) {
+            if (!kontoDB.insertKonto(k))
+                mainView.zeigeFehlermeldung("Konto kann nicht angelegt werden.");
+        }
+
     }
 
     public static void main(String[] args) {
