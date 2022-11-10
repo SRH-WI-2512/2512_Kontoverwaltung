@@ -89,9 +89,7 @@ public class NeuesKontoView extends JFrame {
         centerPanel.add(centerRight);
     }
 
-    public void setAnlegenButtonListener(ActionListener listener){
-        anlegenButton.addActionListener(listener);
-    }
+    public void setAnlegenButtonListener(ActionListener listener){anlegenButton.addActionListener(listener);}
 
     private void switchKontoListener(ActionEvent actionEvent) {
         switchKonto( getKonto() );

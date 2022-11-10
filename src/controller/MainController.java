@@ -26,6 +26,8 @@ public class MainController {
         mainView.setNeuesKontoButtonListener( this::performNeuesKonto );
         mainView.setKontoAnzeigenButtonListener( this::performKontoAnzeigen );
         mainView.setEinzahlenButtonListener( this::performEinzahlen );
+        mainView.setAbhebenButtonListener( this::performAbheben );
+
     }
 
     private void performEinzahlen(ActionEvent actionEvent) {
@@ -33,6 +35,16 @@ public class MainController {
         Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
         if (konto != null) {
             konto.einzahlen( mainView.getBetrag() );
+            kontoDB.updateKonto( kontonummer, konto );
+        }
+        else mainView.zeigeFehlermeldung("Konto nicht gefunden");
+    }
+
+    private void performAbheben(ActionEvent actionEvent) {
+        int kontonummer = mainView.getKontonummer();
+        Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
+        if (konto != null) {
+            konto.abheben( mainView.getBetrag() );
             kontoDB.updateKonto( kontonummer, konto );
         }
         else mainView.zeigeFehlermeldung("Konto nicht gefunden");
@@ -56,6 +68,7 @@ public class MainController {
     private void performNeuesKonto(ActionEvent actionEvent) {
         neuesKontoView = new NeuesKontoView();
         mainView.setEnabled(false);
+
 
         neuesKontoView.setAnlegenButtonListener(this::performKontoAnlegen);
         neuesKontoView.addWindowListener(new WindowListener() {
