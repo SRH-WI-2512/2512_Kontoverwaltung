@@ -1,7 +1,7 @@
 package controller;
 
 import dao.KontoDAO;
-import dao.TempDAO;
+import dao.SqlDAO;
 import model.Festzinskonto;
 import model.Giro;
 import model.Konto;
@@ -25,26 +25,18 @@ public class MainController {
 
         mainView.setNeuesKontoButtonListener( this::performNeuesKonto );
         mainView.setKontoAnzeigenButtonListener( this::performKontoAnzeigen );
-        mainView.setEinzahlenButtonListener( this::performEinzahlen );
-        mainView.setAbhebenButtonListener( this::performAbheben );
-
+        mainView.setEinzahlenButtonListener( this::performEinzahlenAbheben );
+        mainView.setAbhebenButtonListener( this::performEinzahlenAbheben );
     }
 
-    private void performEinzahlen(ActionEvent actionEvent) {
+    private void performEinzahlenAbheben(ActionEvent actionEvent) {
         int kontonummer = mainView.getKontonummer();
         Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
         if (konto != null) {
-            konto.einzahlen( mainView.getBetrag() );
-            kontoDB.updateKonto( kontonummer, konto );
-        }
-        else mainView.zeigeFehlermeldung("Konto nicht gefunden");
-    }
-
-    private void performAbheben(ActionEvent actionEvent) {
-        int kontonummer = mainView.getKontonummer();
-        Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
-        if (konto != null) {
-            konto.abheben( mainView.getBetrag() );
+            if ( mainView.istEinzahlenKlicked( actionEvent ) )
+                konto.einzahlen( mainView.getBetrag() );
+            else
+                konto.abheben( mainView.getBetrag() );
             kontoDB.updateKonto( kontonummer, konto );
         }
         else mainView.zeigeFehlermeldung("Konto nicht gefunden");
@@ -123,6 +115,6 @@ public class MainController {
     }
 
     public static void main(String[] args) {
-        new MainController( new MainView(), new TempDAO() );
+        new MainController( new MainView(), new SqlDAO() );
     }
 }
