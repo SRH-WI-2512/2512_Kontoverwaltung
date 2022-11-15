@@ -6,13 +6,12 @@ import model.Festzinskonto;
 import model.Giro;
 import model.Konto;
 import model.Sparkonto;
+import view.AlleKontenView;
 import view.MainView;
 import view.NeuesKontoView;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.*;
 
 public class MainController {
     private MainView mainView;
@@ -27,6 +26,69 @@ public class MainController {
         mainView.setKontoAnzeigenButtonListener( this::performKontoAnzeigen );
         mainView.setEinzahlenButtonListener( this::performEinzahlenAbheben );
         mainView.setAbhebenButtonListener( this::performEinzahlenAbheben );
+
+        mainView.setAlleKontenAnzeigenButtonListener( this::performAlleKontenAnzeigen );
+    }
+
+    private void zeigeKonto(Konto konto) {
+        if (konto != null) {
+            mainView.setKontonummer(konto.getKontonummer());
+            mainView.setKontoinhaber(konto.getInhaber());
+            mainView.setKontostand(konto.getKontostand());
+        }
+        else {
+            mainView.setKontoinhaber("");
+            mainView.clearKontostand();
+        }
+    }
+
+    private void performAlleKontenAnzeigen(ActionEvent actionEvent) {
+        AlleKontenView alleKontenView = new AlleKontenView();
+        mainView.setEnabled(false);
+
+        DefaultListModel<Konto> kontoModel = new DefaultListModel<>();
+        for (Konto konto : kontoDB.getAllKonten()) {
+            kontoModel.addElement(konto);
+        }
+
+        alleKontenView.setKontoListDefaultModel(kontoModel);
+
+        alleKontenView.setKontoListMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Konto konto = alleKontenView.getSelectedKonto();
+                    zeigeKonto(konto);
+                    alleKontenView.dispose();
+                }
+            }
+        });
+
+        alleKontenView.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {}
+
+            @Override
+            public void windowClosing(WindowEvent e) {}
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                mainView.setEnabled(true);
+                mainView.requestFocus();
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {}
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {}
+
+            @Override
+            public void windowActivated(WindowEvent e) {}
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {}
+        });
     }
 
     private void performEinzahlenAbheben(ActionEvent actionEvent) {
@@ -46,21 +108,14 @@ public class MainController {
         int kontonummer = mainView.getKontonummer();
 
         Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
-        if (konto == null) {
-            mainView.setKontoinhaber("");
-            mainView.clearKontostand();
+        zeigeKonto(konto);
+        if (konto == null)
             mainView.zeigeFehlermeldung("Dieses Konto existiert nicht.");
-        }
-        else {
-            mainView.setKontoinhaber(konto.getInhaber());
-            mainView.setKontostand(konto.getKontostand());
-        }
     }
 
     private void performNeuesKonto(ActionEvent actionEvent) {
         neuesKontoView = new NeuesKontoView();
         mainView.setEnabled(false);
-
 
         neuesKontoView.setAnlegenButtonListener(this::performKontoAnlegen);
         neuesKontoView.addWindowListener(new WindowListener() {

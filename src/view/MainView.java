@@ -98,6 +98,10 @@ public class MainView extends JFrame {
         abhebenButton.addActionListener(listener);
     }
 
+    public void setAlleKontenAnzeigenButtonListener(ActionListener listener) {
+        alleKontenAnzeigenButton.addActionListener(listener);
+    }
+
     public boolean istEinzahlenKlicked(ActionEvent event) {
         return event.getSource() == einzahlenButton;
     }
@@ -111,6 +115,10 @@ public class MainView extends JFrame {
             System.err.println("Kontonummer im falschen Format!");
         }
         return kontonummer;
+    }
+
+    public void setKontonummer(int kontonummer) {
+        kontonummerTextfield.setText( Integer.toString(kontonummer) );
     }
 
     public void setKontoinhaber(String inhaber) {
