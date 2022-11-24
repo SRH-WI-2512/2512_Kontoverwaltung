@@ -26,6 +26,7 @@ public class MainController {
         mainView.setKontoAnzeigenButtonListener( this::performKontoAnzeigen );
         mainView.setEinzahlenButtonListener( this::performEinzahlenAbheben );
         mainView.setAbhebenButtonListener( this::performEinzahlenAbheben );
+        mainView.setKontoLöschenButtonListener( this::performKontoLöschen);
 
         mainView.setAlleKontenAnzeigenButtonListener( this::performAlleKontenAnzeigen );
     }
@@ -89,6 +90,14 @@ public class MainController {
             @Override
             public void windowDeactivated(WindowEvent e) {}
         });
+    }
+    private void performKontoLöschen(ActionEvent actionEvent){
+        int kontonummer = mainView.getKontonummer();
+        Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
+        if (konto != null) {
+            if (mainView.zeigeRückfrage("Sind Sie sicher?"))
+                kontoDB.deleteKonto( kontonummer);
+        }
     }
 
     private void performEinzahlenAbheben(ActionEvent actionEvent) {

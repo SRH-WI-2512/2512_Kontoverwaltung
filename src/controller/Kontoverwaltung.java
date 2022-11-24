@@ -23,6 +23,7 @@ public class Kontoverwaltung {
             System.out.println("Hauptmenü");
             System.out.println("================");
             System.out.println("1 - Konto anlegen");
+
             System.out.println("2 - Konto manipulieren");
             System.out.println("3 - Alle Konten anzeigen");
             System.out.println("4 - Konto löschen");

@@ -18,6 +18,7 @@ public class MainView extends JFrame {
     private JButton einzahlenButton;
     private JButton abhebenButton;
     private JTextField betragTextfield;
+    private JButton kontoLöschenButton;
 
     public MainView() {
         setSize(600, 400);
@@ -67,7 +68,9 @@ public class MainView extends JFrame {
         kontostandTextfield = new JTextField();
         centerPanel.add( new JLabel("Kontostand") );
         centerPanel.add( kontostandTextfield );
-        centerPanel.add( new JButton("Konto löschen") );
+        kontoLöschenButton = new JButton("Konto löschen");
+        centerPanel.add( kontoLöschenButton);
+
 
         betragTextfield = new JTextField();
         centerPanel.add( new JLabel("Betrag") );
@@ -80,6 +83,9 @@ public class MainView extends JFrame {
         manipulationsPanel.add( einzahlenButton );
         manipulationsPanel.add( abhebenButton );
         centerPanel.add( manipulationsPanel );
+    }
+    public void setKontoLöschenButtonListener(ActionListener listener){
+        kontoLöschenButton.addActionListener(listener);
     }
 
     public void setNeuesKontoButtonListener(ActionListener listener) {
@@ -156,5 +162,11 @@ public class MainView extends JFrame {
 
     public void zeigeFehlermeldung(String message) {
         JOptionPane.showMessageDialog(this, message, "Fehler", JOptionPane.ERROR_MESSAGE);
+    }
+    public boolean zeigeRückfrage(String message){
+        return
+        JOptionPane.showConfirmDialog(this, message, "Bestätigung",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION;
+
     }
 }
