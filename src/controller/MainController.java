@@ -26,7 +26,7 @@ public class MainController {
         mainView.setKontoAnzeigenButtonListener( this::performKontoAnzeigen );
         mainView.setEinzahlenButtonListener( this::performEinzahlenAbheben );
         mainView.setAbhebenButtonListener( this::performEinzahlenAbheben );
-        mainView.setKontoLöschenButtonListener( this::performKontoLöschen);
+        mainView.setKontoLöschenButtonListener( this::performKontoLöschen );
 
         mainView.setAlleKontenAnzeigenButtonListener( this::performAlleKontenAnzeigen );
     }
