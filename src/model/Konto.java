@@ -17,7 +17,7 @@ public abstract class Konto /* extends Object */ {
         return kontozähler;
     }
 
-    // später wenn die Konten aus der Datenbank gelesen werden
+    // später, wenn die Konten aus der Datenbank gelesen werden
     public static void setKontozähler(int kontozähler) {
         if (kontozähler < 0) kontozähler = 0;
         Konto.kontozähler = kontozähler;

@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainView extends JFrame {
+public class MainView extends View {
 
     private JButton neuesKontoButton;
     private JButton alleKontenAnzeigenButton;
@@ -21,9 +21,8 @@ public class MainView extends JFrame {
     private JButton kontoLöschenButton;
 
     public MainView() {
-        setSize(600, 400);
+        super();
         setTitle("Kontoverwaltung");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addComponents();
         pack();
         setVisible(true);

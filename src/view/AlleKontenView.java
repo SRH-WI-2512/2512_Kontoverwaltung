@@ -7,14 +7,13 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 
-public class AlleKontenView extends JFrame {
+public class AlleKontenView extends View {
 
     private final JList<Konto> kontoList;
 
     public AlleKontenView() {
-        setSize(600, 400);
+        super();
         setTitle("Alle Konten anzeigen");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         getRootPane().setBorder( new EmptyBorder(5,5,5,5) );
 
         JScrollPane scrollPane = new JScrollPane();

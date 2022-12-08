@@ -6,17 +6,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class NeuesKontoView extends JFrame {
+public class NeuesKontoView extends View {
     private JRadioButton radioGiro, radioSpar, radioFest;
     private JTextField kontoinhaberTextfield, kreditlimitTextfield, zinssatzTextfield, laufzeitTextfield;
     private JButton anlegenButton;
     private JPanel kreditlimitPanel, zinssatzPanel, laufzeitPanel;
 
     public NeuesKontoView() {
-        // setSize() könnte abstrahiert werden => DRY
-        setSize(600, 400);
+
         setTitle("Kontoverwaltung");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         addComponents();
         pack();
         setVisible(true);

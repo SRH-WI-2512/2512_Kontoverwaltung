@@ -2,10 +2,12 @@ package controller;
 
 import dao.KontoDAO;
 import dao.SqlDAO;
+import dao.TempDAO;
 import model.Festzinskonto;
 import model.Giro;
 import model.Konto;
 import model.Sparkonto;
+import view.View;
 import view.AlleKontenView;
 import view.MainView;
 import view.NeuesKontoView;
@@ -65,40 +67,21 @@ public class MainController {
             }
         });
 
-        alleKontenView.addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent e) {}
+        /*TODO*/
 
-            @Override
-            public void windowClosing(WindowEvent e) {}
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                mainView.setEnabled(true);
-                mainView.requestFocus();
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {}
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {}
-
-            @Override
-            public void windowActivated(WindowEvent e) {}
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {}
-        });
+        alleKontenView.addListener(mainView);
     }
-    private void performKontoLöschen(ActionEvent actionEvent){
+    private void performKontoLöschen(ActionEvent actionEvent) {
         int kontonummer = mainView.getKontonummer();
         Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
         if (konto != null) {
             if (mainView.zeigeRückfrage("Sind Sie sicher?"))
-                kontoDB.deleteKonto( kontonummer);
+                kontoDB.deleteKonto(kontonummer);
         }
     }
+
+  
+
 
     private void performEinzahlenAbheben(ActionEvent actionEvent) {
         int kontonummer = mainView.getKontonummer();
@@ -127,31 +110,11 @@ public class MainController {
         mainView.setEnabled(false);
 
         neuesKontoView.setAnlegenButtonListener(this::performKontoAnlegen);
-        neuesKontoView.addWindowListener(new WindowListener() {
-            @Override
-            public void windowOpened(WindowEvent e) {}
 
-            @Override
-            public void windowClosing(WindowEvent e) {}
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                mainView.setEnabled(true);
-                mainView.requestFocus();
-            }
-
-            @Override
-            public void windowIconified(WindowEvent e) {}
-
-            @Override
-            public void windowDeiconified(WindowEvent e) {}
-
-            @Override
-            public void windowActivated(WindowEvent e) {}
-
-            @Override
-            public void windowDeactivated(WindowEvent e) {}
-        });
+        /*
+        TODO
+         */
+        neuesKontoView.addListener(mainView);
     }
 
     private void performKontoAnlegen(ActionEvent actionEvent) {
@@ -179,6 +142,6 @@ public class MainController {
     }
 
     public static void main(String[] args) {
-        new MainController( new MainView(), new SqlDAO() );
+        new MainController( new MainView(), new TempDAO() );
     }
 }

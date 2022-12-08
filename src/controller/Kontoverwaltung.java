@@ -179,7 +179,8 @@ public class Kontoverwaltung {
                 double limit = eingabe.nextDouble();
                 k = new Giro(Konto.getNächsterKontozähler(), 0.0, name, limit);
             }
-            case 2, 3 -> {
+            case 2, 3
+                    -> {
                 System.out.print("Zinssatz:     ");
                 double zinssatz = eingabe.nextDouble();
                 if (auswahl == 2)
