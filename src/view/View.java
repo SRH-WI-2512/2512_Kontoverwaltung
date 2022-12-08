@@ -5,7 +5,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 public abstract class View extends JFrame {
-        public View (){
+        public View(String title) {
+                setTitle(title);
                 setSize(600, 400);
                 setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         }

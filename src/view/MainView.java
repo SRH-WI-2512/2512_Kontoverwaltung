@@ -21,8 +21,7 @@ public class MainView extends View {
     private JButton kontoLöschenButton;
 
     public MainView() {
-        super();
-        setTitle("Kontoverwaltung");
+        super("Kontoverwaltung");
         addComponents();
         pack();
         setVisible(true);

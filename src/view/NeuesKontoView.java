@@ -13,8 +13,7 @@ public class NeuesKontoView extends View {
     private JPanel kreditlimitPanel, zinssatzPanel, laufzeitPanel;
 
     public NeuesKontoView() {
-
-        setTitle("Kontoverwaltung");
+        super("Kontoverwaltung");
         addComponents();
         pack();
         setVisible(true);

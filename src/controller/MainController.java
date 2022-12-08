@@ -1,8 +1,6 @@
 package controller;
 
-import dao.KontoDAO;
-import dao.SqlDAO;
-import dao.TempDAO;
+import dao.*;
 import model.Festzinskonto;
 import model.Giro;
 import model.Konto;
@@ -79,9 +77,6 @@ public class MainController {
                 kontoDB.deleteKonto(kontonummer);
         }
     }
-
-  
-
 
     private void performEinzahlenAbheben(ActionEvent actionEvent) {
         int kontonummer = mainView.getKontonummer();

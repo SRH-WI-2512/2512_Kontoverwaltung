@@ -12,8 +12,7 @@ public class AlleKontenView extends View {
     private final JList<Konto> kontoList;
 
     public AlleKontenView() {
-        super();
-        setTitle("Alle Konten anzeigen");
+        super("Alle Konten anzeigen");
         getRootPane().setBorder( new EmptyBorder(5,5,5,5) );
 
         JScrollPane scrollPane = new JScrollPane();
