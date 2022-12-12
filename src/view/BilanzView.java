@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.text.DecimalFormat;
 import java.util.concurrent.Flow;
 
 public class BilanzView extends View {
@@ -52,6 +53,7 @@ public class BilanzView extends View {
     private JTextField buildAnzahlFeld() {
         JTextField countField = new JTextField("0");
         countField.setColumns(3);
+        countField.setEditable(false);
         return countField;
     }
 
@@ -61,8 +63,41 @@ public class BilanzView extends View {
         if (countField != null) panel.add(countField);
         JTextField amountField = new JTextField("0.00 €");
         amountField.setColumns(8);
+        amountField.setEditable(false);
         panel.add( amountField );
         return amountField;
+    }
+
+    public void setGiroAnzahl(int giroAnzahl) {
+        giroAnzahlFeld.setText( Integer.toString(giroAnzahl) );
+    }
+
+    public void setSparAnzahl(int sparAnzahl) {
+        sparAnzahlFeld.setText( Integer.toString(sparAnzahl) );
+    }
+
+    public void setFestzinsAnzahl(int festzinsAnzahl) {
+        festzinsAnzahlFeld.setText( Integer.toString(festzinsAnzahl) );
+    }
+
+    public void setGiroSumme(double betrag) {
+        DecimalFormat df = new DecimalFormat("#,##0.00 €");
+        giroSummeFeld.setText( df.format(betrag) );
+    }
+
+    public void setSparSumme(double betrag) {
+        DecimalFormat df = new DecimalFormat("#,##0.00 €");
+        sparSummeFeld.setText( df.format(betrag) );
+    }
+
+    public void setFestzinsSumme(double betrag) {
+        DecimalFormat df = new DecimalFormat("#,##0.00 €");
+        festzinsSummeFeld.setText( df.format(betrag) );
+    }
+
+    public void setKreditSumme(double betrag) {
+        DecimalFormat df = new DecimalFormat("#,##0.00 €");
+        kreditSummeFeld.setText( df.format(betrag) );
     }
 
     public static void main(String[] args) {

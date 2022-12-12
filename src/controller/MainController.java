@@ -5,10 +5,7 @@ import model.Festzinskonto;
 import model.Giro;
 import model.Konto;
 import model.Sparkonto;
-import view.View;
-import view.AlleKontenView;
-import view.MainView;
-import view.NeuesKontoView;
+import view.*;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -29,6 +26,46 @@ public class MainController {
         mainView.setKontoLöschenButtonListener( this::performKontoLöschen );
 
         mainView.setAlleKontenAnzeigenButtonListener( this::performAlleKontenAnzeigen );
+
+        mainView.setBillanzButtonListener( this::performBilanz );
+    }
+
+    private void performBilanz(ActionEvent actionEvent) {
+        double summeGiro = 0;     int anzahlGiro = 0;
+        double summeSpar = 0;     int anzahlSpar = 0;
+        double summeFestzins = 0; int anzahlFestzins = 0;
+        double summeKredit = 0; // Summer aller überzogenen Konten
+
+        // jetzt benutzten wir mal die neue for-each Schleife
+        for (Konto k : kontoDB.getAllKonten()) {
+
+            if ( k instanceof Giro ) {
+                anzahlGiro++;
+                if (k.getKontostand() > 0)
+                    summeGiro += k.getKontostand();
+            }
+            else if ( k instanceof Festzinskonto ) {
+                anzahlFestzins++;
+                summeFestzins += k.getKontostand();
+            }
+            else if ( k instanceof Sparkonto ) {
+                anzahlSpar++;
+                summeSpar += k.getKontostand();
+            }
+            if (k.getKontostand() < 0)
+                summeKredit += -k.getKontostand();
+        }
+
+        BilanzView bilanzView = new BilanzView();
+        bilanzView.setGiroAnzahl(anzahlGiro);
+        bilanzView.setGiroSumme(summeGiro);
+        bilanzView.setSparAnzahl(anzahlSpar);
+        bilanzView.setSparSumme(summeSpar);
+        bilanzView.setFestzinsAnzahl(anzahlFestzins);
+        bilanzView.setFestzinsSumme(summeFestzins);
+        bilanzView.setKreditSumme(summeKredit);
+
+        bilanzView.addListener(mainView);
     }
 
     private void zeigeKonto(Konto konto) {
@@ -64,8 +101,6 @@ public class MainController {
                 }
             }
         });
-
-        /*TODO*/
 
         alleKontenView.addListener(mainView);
     }
@@ -106,9 +141,6 @@ public class MainController {
 
         neuesKontoView.setAnlegenButtonListener(this::performKontoAnlegen);
 
-        /*
-        TODO
-         */
         neuesKontoView.addListener(mainView);
     }
 
