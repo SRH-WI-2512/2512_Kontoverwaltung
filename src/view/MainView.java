@@ -108,6 +108,10 @@ public class MainView extends View {
         alleKontenAnzeigenButton.addActionListener(listener);
     }
 
+    public void setZinsenZuschlagenButtonListener(ActionListener listener) {
+        zinsenZuschlagenButton.addActionListener(listener);
+    }
+
     public void setBillanzButtonListener(ActionListener listener) {
         billanzButton.addActionListener(listener);
     }

@@ -24,10 +24,20 @@ public class MainController {
         mainView.setEinzahlenButtonListener( this::performEinzahlenAbheben );
         mainView.setAbhebenButtonListener( this::performEinzahlenAbheben );
         mainView.setKontoLöschenButtonListener( this::performKontoLöschen );
+        mainView.setZinsenZuschlagenButtonListener( this::performZinsenZuschlagen );
 
         mainView.setAlleKontenAnzeigenButtonListener( this::performAlleKontenAnzeigen );
 
         mainView.setBillanzButtonListener( this::performBilanz );
+    }
+
+    private void performZinsenZuschlagen(ActionEvent actionEvent) {
+        int kontonummer = mainView.getKontonummer();
+        Konto konto = kontoDB.getKontoByKontonummer(kontonummer);
+        if (konto != null) {
+            konto.zinsAusschüttung();
+            kontoDB.updateKonto( kontonummer, konto );
+        }
     }
 
     private void performBilanz(ActionEvent actionEvent) {
@@ -104,6 +114,7 @@ public class MainController {
 
         alleKontenView.addListener(mainView);
     }
+
     private void performKontoLöschen(ActionEvent actionEvent) {
         int kontonummer = mainView.getKontonummer();
         Konto konto = kontoDB.getKontoByKontonummer(kontonummer);

@@ -15,9 +15,10 @@ Neue Features für unsere Kontoverwaltung
 - Zinsen zuschlagen muss noch implementiert werden!
   * Der Button soll nur für die entsprechende Konten nutzbar sein
 
-- Vorwärts- und Rückwärtsbutton, um durch die Konten durchzuschalten
-
 - Entfernen aller Textausgaben (System.out.print) und Nutzen von Exceptions
+  z.B. bei Zinsausschüttung
+
+- Vorwärts- und Rückwärtsbutton, um durch die Konten durchzuschalten
 
 - AlleKontenView Verbesserungen
   * toString() der Models könnte etwas verhübscht werden
