@@ -19,6 +19,7 @@ public class MainView extends View {
     private JButton abhebenButton;
     private JTextField betragTextfield;
     private JButton kontoLöschenButton;
+    private JButton zinsenZuschlagenButton;
 
     public MainView() {
         super("Kontoverwaltung");
@@ -61,7 +62,8 @@ public class MainView extends View {
         kontoinhaberTextfield = new JTextField();
         centerPanel.add( new JLabel("Kontoinhaber") );
         centerPanel.add( kontoinhaberTextfield );
-        centerPanel.add( new JButton("Zinsen zuschlagen") );
+        zinsenZuschlagenButton = new JButton("Zinsen zuschlagen");
+        centerPanel.add( zinsenZuschlagenButton );
 
         kontostandTextfield = new JTextField();
         centerPanel.add( new JLabel("Kontostand") );

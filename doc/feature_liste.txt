@@ -1,0 +1,29 @@
+Neue Features für unsere Kontoverwaltung
+----------------------------------------
+(Hinweis: Nur optische und bedientechnische Verbesserungen)
+
+- Starten ohne IDE
+  -> Erzeugen einer JAR-Dateien
+     JAR: Java Archive (wie eine ZIP-Datei)
+
+- Hauptfenster soll weitere Informationen anzeigen
+  * Kontotyp
+  * je nach Kontotyp: Kreditlimit (Giro)
+                      Zinssatz (Spar und Festzins)
+                      Laufzeit (Festzins)
+
+- Zinsen zuschlagen muss noch implementiert werden!
+  * Der Button soll nur für die entsprechende Konten nutzbar sein
+
+- Vorwärts- und Rückwärtsbutton, um durch die Konten durchzuschalten
+
+- Entfernen aller Textausgaben (System.out.print) und Nutzen von Exceptions
+
+- AlleKontenView Verbesserungen
+  * toString() der Models könnte etwas verhübscht werden
+  * Kontotyp-Selektor (Alle, Giro, ...)
+  * Suchfeld, dass nur die Kontoinhaber anzeigt,
+    deren Name den Suchstring enthält
+  * Zwei Buttons, um die Liste alphabetisch sortiert anzeigen zu lassen
+    (auf- bzw. absteigend). Wenn keiner der Buttons aktiv ist, soll die
+    "natürliche" Sortierung angezeigt werden.
